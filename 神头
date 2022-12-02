@@ -6,4 +6,18 @@ xss
 sql注入
 1.构造闭合
 2.updatexml执行恶意代码（concat可以拼接字符）
+3 extractval(1,xxxx)
+4.floor的利用
+三件套（floor，count，group by）
+例子：select count(*),floor(rand(0)*2)as x from information_schema.tables group by x;
+利用group by会生成一个虚拟表（count记录数据出现的次数）
+---------------------
+count |   x
+--------------------
+2     |   1
+--------------------
+1     |   1
+--------------------
+数据库名称重复报错：把x中的内容爆出来
+（select x from oooo ==直接返回x 利用x作为查询到的字段添加进虚拟表中）
 
