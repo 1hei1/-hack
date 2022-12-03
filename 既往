@@ -1,0 +1,3 @@
+arp欺骗：
+利用scapy发送ARP(pdst=xxxx（目标ip），hwdst=xxx（目标mac），op=1/2（请求/响应），psrc=（本地ip），hwsrc=（本地mac）
+构造ip为全网段192.168.123.1/24 构造macff:ff:ff:ff:ff:ff 本地ip网关
