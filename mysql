@@ -1,0 +1,33 @@
+首先：
+mysql安装
+1.从官网下载压缩包：wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.24-linux-glibc2.12-x86_64.tar.gz
+2.解压 tar xzvf mysql-5.7.24-linux-glibc2.12-x86_64.tar.gz
+3.解压后的文件移动到/usr/local/mysql目录下:mv mysql-5.7.24-linux-glibc2.12-x86_64 /usr/local/mysql
+4.创建data目录： mkdir /usr/local/mysql/data
+5.为文件赋予权限(1.文件所有者，2.目录执行权限）：1.chown -R mysql:mysql /usr/local/mysql  2.chmod -R 755 /usr/local/mysql
+6.若上一步的1没有成功则执行（原因是没有mysql用户组，用户，用命令创建即可）：groupadd mysql   useradd -r -g mysql mysql
+7.编译并安装数据库（在/etc/local/mysql/bin目录下）：cd /etc/local/mysql/bin  ./mysqld --initialize --user=mysql --datadir=/usr/local/mysql/data --basedir=/usr/local/mysql
+执行完以后记住最后的root@localhost:xxxxx记录住xxxxx这是数据库初始密码
+8.创建并编辑数据库配置文件：vim /etc/my.cnf
+文件内容：[mysqld]
+datadir=/usr/local/mysql/data
+port = 3306
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+symbolic-links=0
+max_connections=400
+innodb_file_per_table=1
+lower_case_table_names=1
+character_set_server=utf8
+9.启动MySQL：/usr/local/mysql/support-files/mysql.server start
+10.创建软连接:ln -s /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql 
+11.若出现：error while loading shared libraries: libncurses.so.5: cannot open shared object file: no such file or directory错误
+则安装依赖：sudo yum install libncurses*
+12.用如下命令查看是否有libncurses.so.5:find / -name 'libncurses*'
+若无则创建高级向低级的软连接：1.ln -s /usr/lib64/libncurses.so.6 /usr/lib64/libncurses.so.5
+                           2. ln -s /usr/lib64/libtinfo.so.6 /usr/lib64/libtinfo.so.5
+最后：mysql -u root -p
+输入密码:上面记录的
+13.修改数据库密码(xxxx是你详设的密码）：set password for root@localhost = password('xxxxx')；
+14.开始使用
+o了
+
